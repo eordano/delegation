@@ -1,10 +1,12 @@
-# Stage 1: Setting up the project
+# Stage 2: Setting up cursor.sh
 
-## Chat with GPT4:
+Delegation is a simple HTML+JS single page application built with React and Typescript to help me with an optimization problem.
 
-I need your help creating a simple HTML+JS single page application to help me with an optimization problem. I would like to pick 20 delegates out of a set of candidates to delegate my votes to. The system in question is an Ethereum-based DAO, and I can distribute my "voting power" (similar to shares) across a number of users that I feel would vote similarly to me. In order to do that, I have a transparent list of who voted for what across time.
+The problem: Pick 20 delegates out of a set of candidates to delegate my votes to.
 
-The data is in the following format, in the shape of three CSV files that I can serve together with a simple static file server (I don't need help with that, please focus on the output of the HTML and JS):
+The system in question is an Ethereum-based DAO, and I can distribute my "voting power" (similar to shares) across a number of users that I feel would vote similarly to me. In order to do that, I have a transparent list of who voted for what across time.
+
+The data is in the following format, in the shape of three CSV files served from `/data/{members,votes,proposals}.csv
 
 members.csv sample rows (out of ~4316):
 ```
@@ -31,22 +33,16 @@ Proposal ID	Snapshot ID	Author	Type	Title	Started	Ended	Threshold	Status	Forum T
 4e57fe70-3084-11ee-a512-65477fceb1b0	0x6a779076aa6e7f27c53285dde222b2f54149b1edf6364ce86c26810f5cd3ce0b	0x0636211443e91468ee3657e1d7faede7059c4843	governance	Should Grant Request Proposals require at least 100 VP to submit?	2023-08-01T15:58:00.328Z	2023-08-15T15:58:00.327Z	6000000	active	20081	2,641,025	4,094	26,000	147,500	2,391,404	49
 ```
 
-Now, I'd like to get a list of the proposals over the past 6 months, gather the different "Choice" values for each proposal, and ask me what I would vote on that proposal.
+This is the plan to build the app:
 
-After voting on them (or skipping them), I'd like a summary of the top 40 candidates that would have voted similarly to me, with a summary of which proposals we have voted similarly, and which we have voted differently.
+### Step 1: Setting up the Environment and Loading the Data [DONE]
+- **Toolset**: React, Typescript, node.js, Express, esbuild
+- **Loading Data**: Simple fetch from javascript of the CSV files
 
-I know this is quite an undertaking, so let's start thinking step by step how to achieve this. It's OK to use a commonly used framework like React, but I'd like to limit the libraries that we use.
+Files: 'src/index.tsx' contains the base App component and rendering, `static/index.html` contains the base HTML, `index.ts` in the root folder contains the server-side code.
 
-
-## Answer
-
-Absolutely! This is a fascinating project, and I can guide you through it step by step. Given the nature of the data and requirements, I'll divide this into a series of steps, and we can proceed accordingly.
-
-### Step 1: Setting up the Environment and Loading the Data
-- **Toolset**: You mentioned we can use React. We'll stick with that, without including many additional libraries to keep things simple.
-- **Loading Data**: We'll need to load the three CSV files. We can either do this directly in the browser using JavaScript or serve them as static JSON files and load them via a fetch request.
-
-### Step 2: Filtering Proposals and Gathering Choices
+### Step 2: Analyzing the data, Filtering Proposals and Gathering Choices
+- **Creating Typescript Types**: From the samples, create raw types from what is read in the CSVs into `src/csvTypes.ts` and the combined, parsed data types in `src/types.ts` [CURRENT]
 - **Filtering Proposals**: From the "proposals.csv" file, we'll filter out the proposals from the past 6 months.
 - **Gathering Choices**: We'll need to join this data with the "votes.csv" to get the different choices for each proposal.
 
@@ -59,45 +55,3 @@ Absolutely! This is a fascinating project, and I can guide you through it step b
 
 ### Step 5: Displaying Results
 - **Summary Display**: We'll create a component to display the summary of the top 40 candidates, highlighting similarities and differences.
-
-#### Code Snippet to Start with Step 1
-
-You can set up a new React project and load the CSV files using the native fetch API.
-
-```jsx
-import React, { useEffect, useState } from "react";
-
-function App() {
-  const [members, setMembers] = useState([]);
-  const [votes, setVotes] = useState([]);
-  const [proposals, setProposals] = useState([]);
-
-  const fetchData = async (url) => {
-    const response = await fetch(url);
-    const data = await response.text();
-    return data.split("\n").map((row) => row.split(","));
-  };
-
-  useEffect(() => {
-    fetchData("/path/to/members.csv").then(setMembers);
-    fetchData("/path/to/votes.csv").then(setVotes);
-    fetchData("/path/to/proposals.csv").then(setProposals);
-  }, []);
-
-  return (
-    <div>
-      <h1>Delegation Helper</h1>
-      {/* Further components and logic here */}
-    </div>
-  );
-}
-
-export default App;
-```
-
-You'll probably want to handle the CSV parsing more robustly and might consider using a small library like `PapaParse` for that purpose, but the above code gets the project started.
-
-#### Next Steps
-After setting up the project with the above code, the next step would be to filter the proposals based on the past 6 months and to start building the voting interface.
-
-Please let me know when you're ready to move on, and we can dive into more detail for each step!
