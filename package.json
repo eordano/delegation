@@ -1,10 +1,12 @@
 {
   "name": "delegation",
   "version": "1.0.0",
-  "description": "## Chat with GPT4:",
+  "description": "An application to pick voting delegates based on a set of votes and historic information.",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node index.ts"
+    "start": "ts-node scripts/start.ts",
+    "build": "esbuild --bundle --minify --sourcemap --target=es2015 src/index.tsx --outfile=static/index.js",
+    "update": "ts-node scripts/update.ts"
   },
   "keywords": [],
   "author": "Esteban Ordano <esteban@decentraland.org",

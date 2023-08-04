@@ -1,6 +1,21 @@
 # delegation
 
-An application to pick voting delegates based on a set of votes and historic information.
+An application to pick voting delegates based on a set of votes and historic information. It's not the prettiest, but contributions are welcome!
+
+## Getting started
+
+0. Install, if you don't have them, `git` and `npm`
+1. Clone the repo with `git pull https://github.com/eordano/delegation`
+2. Run `npm install`
+3. Run `npm start`
+4. Go to `http://localhost:7890`
+
+## Updating the database
+
+The repo contains a snapshot of all votes as of August 2nd, 2023. These instructions allow one to update the dataset.
+
+1. Replace the files `members.csv`, `proposals.csv`, and `votes.csv` on `static/data/` with the CSV exports from this Google Spreadsheet: [Decentraland DAO Transparency Data](https://docs.google.com/spreadsheets/d/1FoV7TdMTVnqVOZoV4bvVdHWkeu4sMH5JEhp8L0Shjlo/edit#gid=624625832). The sheets used are the second, third, and fourth ones.
+2. Run `npm run update`, which will regenerate `static/data/all.json`.
 
 ## About
 
