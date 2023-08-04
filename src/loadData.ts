@@ -19,6 +19,8 @@ export function loadData(all: {
     for (let proposal of proposals) {
         const newProposal: Proposal = {
             ...proposal,
+            Started: new Date(proposal.Started),
+            Ended: new Date(proposal.Ended),
             VoteByMembers: {},
             Voters: [],
             Votes: []
@@ -39,6 +41,7 @@ export function loadData(all: {
         }
         const newVote: Vote = {
             ...vote,
+            Created: new Date(vote.Created),
             Member: member,
             Proposal: proposal
         }
