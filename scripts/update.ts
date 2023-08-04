@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
 import * as Papa from 'papaparse';
-import { Proposal } from './src/csvTypes'
-import { parseMember, parseVote, parseProposal, ParsedMember, ParsedVote, ParsedProposal } from './src/parseData'
+import { Proposal } from '../src/csvTypes'
+import { parseMember, parseVote, parseProposal, ParsedMember, ParsedVote, ParsedProposal } from '../src/parseData'
 
 async function parse(file: string): Promise<any[]> {
   const contents = await fs.readFile(file, 'utf-8')

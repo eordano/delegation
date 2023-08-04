@@ -1,6 +1,8 @@
 # delegation
 
-An application to pick voting delegates based on a set of votes and historic information. It's not the prettiest, but contributions are welcome!
+An application to pick voting delegates based on a set of votes and historic information.
+
+[Check it out live at eordano.github.io/delegation!](https://eordano.github.io/delegation/) It's not the prettiest, but contributions are welcome.
 
 ## Getting started
 
@@ -16,6 +18,7 @@ The repo contains a snapshot of all votes as of August 2nd, 2023. These instruct
 
 1. Replace the files `members.csv`, `proposals.csv`, and `votes.csv` on `static/data/` with the CSV exports from this Google Spreadsheet: [Decentraland DAO Transparency Data](https://docs.google.com/spreadsheets/d/1FoV7TdMTVnqVOZoV4bvVdHWkeu4sMH5JEhp8L0Shjlo/edit#gid=624625832). The sheets used are the second, third, and fourth ones.
 2. Run `npm run update`, which will regenerate `static/data/all.json`.
+3. Sit tight, as it takes my moderately high powered computer about a minute to build this file.
 
 ## About
 
@@ -25,13 +28,13 @@ The system in question is an Ethereum-based DAO, and one can distribute their "v
 
 This is the plan to build the app:
 
-### Step 1: Setting up the Environment and Loading the Data [DONE]
+### Step 1: Setting up the Environment and Loading the Data 
 - **Toolset**: React, Typescript, node.js, Express, esbuild
 - **Loading Data**: Simple fetch from javascript of the CSV files
 
 Files: 'src/index.tsx' contains the base App component and rendering, `static/index.html` contains the base HTML, `index.ts` in the root folder contains the server-side code, `types.ts` contains the actual shape of the parsed votes, members, and proposals.
 
-### Step 2: Analyzing the data, Filtering Proposals and Gathering Choices [DONE]
+### Step 2: Analyzing the data, Filtering Proposals and Gathering Choices
 - **Creating Typescript Types**: the raw types from what is read in the CSVs the final database with nested types is stored in `src/types.ts`, loaded in `src/index.tsx` according to `src/loadData.ts`.
 - **Filtering Proposals**: `src/index.tsx` filters out the proposals from the past 6 months
 
@@ -71,3 +74,6 @@ proposals.csv sample row (out of ~1879):
 Proposal ID	Snapshot ID	Author	Type	Title	Started	Ended	Threshold	Status	Forum Topic	Total VP	MANA VP	LAND VP	NAMES VP	DELEGATED VP	Votes
 4e57fe70-3084-11ee-a512-65477fceb1b0	0x6a779076aa6e7f27c53285dde222b2f54149b1edf6364ce86c26810f5cd3ce0b	0x0636211443e91468ee3657e1d7faede7059c4843	governance	Should Grant Request Proposals require at least 100 VP to submit?	2023-08-01T15:58:00.328Z	2023-08-15T15:58:00.327Z	6000000	active	20081	2,641,025	4,094	26,000	147,500	2,391,404	49
 ```
+
+## Copyright
+This code can be copied, modified, and distributed under the terms of the MIT Open Source License (see LICENSE).

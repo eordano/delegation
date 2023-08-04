@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/data/all.json")
+      const response = await fetch("data/all.json")
       const data = loadData(await response.json())
       setData(data)
       const p = Object.values(data.proposals) as any as Proposal[]
